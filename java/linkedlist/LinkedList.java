@@ -18,17 +18,19 @@ public class LinkedList<T> {
       return;
     }
 
+    // java 8 lambda expressions
     forEachNode(
-      n -> {}, // do nothing.  
-      n -> n.next = new Node(data) // add to last node
+      n -> {}, // do nothing.
+      n -> n.next = new Node(data) // add new node to last node's next pointer.
     );
   }
 
   public void forEach(Consumer<T> function) {
-    forEachNode(
-      n -> function.accept(n.data),
-      n -> {} // do nothing.
-    );
+    // public consumers only get data, not private nodes
+    Consumer<Node> fn = n -> function.accept(n.data);
+
+    // but reusing forEachNode function.
+    forEachNode(fn, fn);
   }
 
   public boolean isEmpty() {
@@ -36,7 +38,7 @@ public class LinkedList<T> {
   }
 
   private void forEachNode(Consumer<Node> function, Consumer<Node> lastNodeFunction) {
-    if (list == null) {
+    if (isEmpty()) {
       return;
     }
 
@@ -46,6 +48,12 @@ public class LinkedList<T> {
 
     while (curr.next != null) {
       curr = curr.next;
+
+      if (curr.next == null) {
+        break; // let lastNodeFunction handle last node.
+      }
+
+      // not last node, handle.
       function.accept(curr);      
     }
 
