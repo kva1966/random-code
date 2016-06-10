@@ -44,7 +44,13 @@ public class LinkedList<T> {
 
     Node curr = list;
 
-    function.accept(curr);
+    if (curr.next == null) {
+      // only one node, thus handled by last node function.
+      lastNodeFunction.accept(curr);
+      return;      
+    }
+
+    function.accept(curr);  
 
     while (curr.next != null) {
       curr = curr.next;

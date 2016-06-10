@@ -11,6 +11,20 @@ public class Test {
 
     names.add("Kamal");
     printList(names);
+
+    System.out.println("======");
+
+    LinkedList<Integer> ints = new LinkedList<>();
+    printList(ints);
+
+    ints.add(11);
+    printList(ints);
+
+    ints.add(33);
+    printList(ints);
+
+    ints.add(44);
+    printList(ints);
   }
 
   private static void printList(LinkedList<?> list) {
@@ -20,7 +34,7 @@ public class Test {
       System.out.println("<EMPTY LIST>");
       return;
     }
-    
+
     list.forEach(data -> System.out.println(data.toString()));
   }
 }
